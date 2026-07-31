@@ -1,0 +1,225 @@
+# 11-terraform-modules.md
+
+# Terraform Modules
+
+> **Sprint:** 3 – Infrastructure as Code (IaC)
+> **Status:** ✅ Completed
+
+---
+
+# Overview
+
+Terraform Modules are reusable collections of Terraform resources that help organize infrastructure into smaller, maintainable components.
+
+In this project, separate modules are used for:
+
+- VPC
+- Amazon EKS
+
+---
+
+# Why Use Modules?
+
+- Reusable code
+- Cleaner project structure
+- Easier maintenance
+- Better scalability
+- Reduced duplication
+
+---
+
+# Project Structure
+
+```text
+terraform/
+├── modules/
+│   ├── vpc/
+│   └── eks/
+└── environments/
+```
+
+---
+
+# Benefits
+
+- Easy to reuse
+- Simplifies infrastructure management
+- Supports multiple environments
+
+---
+
+# Best Practices
+
+- One module for one responsibility
+- Use variables and outputs
+- Avoid duplicate code
+
+---
+
+# Interview Questions
+
+- What is a Terraform Module?
+- Why use modules instead of one large file?
+- What are module inputs and outputs?
+
+---
+
+# Summary
+
+Terraform Modules improve code organization, reusability, and scalability by separating infrastructure into reusable components.
+
+--------------------
+# 12-vpc.md
+
+# Amazon VPC
+
+> **Sprint:** 3 – Infrastructure as Code (IaC)
+> **Status:** ✅ Completed
+
+---
+
+# Overview
+
+Amazon Virtual Private Cloud (VPC) provides an isolated network for AWS resources.
+
+The VPC created in this project is used to host the Amazon EKS cluster securely.
+
+---
+
+# Components
+
+- VPC
+- Public Subnets
+- Private Subnets
+- Internet Gateway
+- NAT Gateway
+- Route Tables
+
+---
+
+# Architecture
+
+```text
+Internet
+    │
+Internet Gateway
+    │
+Public Subnets
+    │
+NAT Gateway
+    │
+Private Subnets
+    │
+Amazon EKS
+```
+
+---
+
+# Why Private Subnets?
+
+- Improved security
+- Worker nodes are not directly exposed to the internet
+- Internet access through NAT Gateway
+
+---
+
+# Best Practices
+
+- Use multiple Availability Zones
+- Keep workloads in private subnets
+- Enable least-privilege networking
+
+---
+
+# Interview Questions
+
+- What is a VPC?
+- Difference between public and private subnets?
+- Why use a NAT Gateway?
+
+---
+
+# Summary
+
+The VPC provides a secure networking foundation for deploying Kubernetes clusters and other AWS resources.
+----------------
+# 13-eks.md
+
+# Amazon Elastic Kubernetes Service (EKS)
+
+> **Sprint:** 3 – Infrastructure as Code (IaC)
+> **Status:** ✅ Completed
+
+---
+
+# Overview
+
+Amazon EKS is a managed Kubernetes service that simplifies deploying and operating Kubernetes clusters on AWS.
+
+In this project, Terraform is used to provision the EKS cluster.
+
+---
+
+# EKS Components
+
+- Control Plane (Managed by AWS)
+- Worker Nodes
+- Node Groups
+- IAM Roles
+- VPC Networking
+
+---
+
+# Architecture
+
+```text
+Developer
+    │
+Terraform
+    │
+Amazon EKS
+    │
+Worker Nodes
+    │
+Containers
+```
+
+---
+
+# Why EKS?
+
+- Managed Kubernetes
+- High availability
+- Automatic control plane management
+- Easy AWS integration
+
+---
+
+# Benefits
+
+- Scalable
+- Secure
+- Production-ready
+- Supports Kubernetes ecosystem
+
+---
+
+# Best Practices
+
+- Deploy worker nodes in private subnets
+- Use IAM Roles for Service Accounts (IRSA)
+- Provision infrastructure using Terraform
+
+---
+
+# Interview Questions
+
+- What is Amazon EKS?
+- Why use EKS instead of self-managed Kubernetes?
+- What components make up an EKS cluster?
+
+---
+
+# Summary
+
+Amazon EKS provides a fully managed Kubernetes control plane, allowing engineers to focus on deploying and managing applications instead of maintaining Kubernetes infrastructure.
