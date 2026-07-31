@@ -1,0 +1,128 @@
+Absolutely. Since this is for GitHub documentation, keeping it **concise but professional** is a better choice.
+
+---
+
+````markdown
+# Terraform State
+
+> **Sprint:** 3 – Infrastructure as Code (IaC)  
+> **Status:** ✅ Completed
+
+---
+
+# Overview
+
+Terraform State is a file that stores information about the infrastructure managed by Terraform. It acts as Terraform's memory, allowing it to track existing resources and determine what changes are required during future deployments.
+
+By default, Terraform stores the state locally in a file named:
+
+```text
+terraform.tfstate
+```
+
+---
+
+# Why is Terraform State Important?
+
+Without the state file, Terraform would not know:
+
+- Which resources it created
+- Which resources already exist
+- What needs to be updated or deleted
+
+The state file enables Terraform to compare the **current infrastructure** with the **desired configuration**.
+
+---
+
+# Terraform State Workflow
+
+```text
+Terraform Code
+      │
+      ▼
+terraform plan
+      │
+      ▼
+Compare Desired State
+with Current State
+      │
+      ▼
+terraform.tfstate
+      │
+      ▼
+Create / Update / Delete Resources
+```
+
+---
+
+# Local vs Remote State
+
+### Local State
+
+- Stored on the local machine
+- Suitable for learning and personal projects
+- Not recommended for team collaboration
+
+### Remote State
+
+- Stored in a shared location (Amazon S3)
+- Accessible by team members
+- More secure and reliable
+- Used in production environments
+
+---
+
+# Common State Commands
+
+Initialize Terraform:
+
+```bash
+terraform init
+```
+
+Show current state:
+
+```bash
+terraform show
+```
+
+List managed resources:
+
+```bash
+terraform state list
+```
+
+---
+
+# Best Practices
+
+- Never commit `terraform.tfstate` to Git.
+- Store state remotely using Amazon S3.
+- Enable state locking with DynamoDB.
+- Review changes using `terraform plan` before applying.
+
+---
+
+# Key Learnings
+
+- Terraform State is the core of Terraform.
+- It keeps track of managed infrastructure.
+- State enables safe updates and deletions.
+- Remote state is essential for team collaboration.
+
+---
+
+# Interview Questions
+
+- What is Terraform State?
+- Why does Terraform need a state file?
+- Where is the state file stored by default?
+- Why should `terraform.tfstate` not be committed to Git?
+- What is the difference between local and remote state?
+
+---
+
+# Summary
+
+Terraform State records the current infrastructure managed by Terraform. It allows Terraform to detect changes, manage resources safely, and keep infrastructure synchronized with the configuration code. For production environments, the state should always be stored remotely and protected with state locking.
+````
