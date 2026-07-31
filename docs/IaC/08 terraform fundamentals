@@ -1,0 +1,525 @@
+````markdown
+# Terraform Fundamentals
+
+> **Sprint:** 3 – Infrastructure as Code (IaC)
+>
+> **Status:** ✅ Completed
+>
+> **Category:** Infrastructure Provisioning
+
+---
+
+# Overview
+
+Terraform is an **Infrastructure as Code (IaC)** tool developed by HashiCorp that allows engineers to define, provision, and manage infrastructure using configuration files instead of manually creating resources through a cloud provider's web console.
+
+Instead of clicking through the AWS Console to create resources such as VPCs, EC2 instances, EKS clusters, and S3 buckets, Terraform allows those resources to be declared in code and provisioned consistently.
+
+Terraform follows a **declarative approach**, meaning you describe the desired infrastructure state, and Terraform determines the actions required to reach that state.
+
+---
+
+# Why Infrastructure as Code?
+
+Traditionally, cloud infrastructure was created manually.
+
+Example:
+
+- Login to AWS Console
+- Create VPC
+- Create Subnets
+- Create Route Tables
+- Create Internet Gateway
+- Launch EC2
+- Configure Security Groups
+
+Problems with this approach:
+
+- Manual mistakes
+- Difficult to reproduce
+- No version control
+- No collaboration
+- Hard to audit changes
+
+Infrastructure as Code solves these problems by storing infrastructure definitions as code.
+
+Benefits:
+
+- Repeatable deployments
+- Version controlled infrastructure
+- Easy collaboration
+- Automated provisioning
+- Disaster recovery
+- Consistent environments
+
+---
+
+# Why Terraform?
+
+Terraform supports multiple cloud providers using a common workflow.
+
+Supported platforms include:
+
+- AWS
+- Microsoft Azure
+- Google Cloud Platform
+- Oracle Cloud
+- DigitalOcean
+- Kubernetes
+- VMware
+- GitHub
+- Cloudflare
+- Hundreds of community providers
+
+For this project, Terraform is used to provision AWS infrastructure including:
+
+- Remote State Backend
+- Amazon VPC
+- Amazon EKS
+- Supporting AWS resources
+
+---
+
+# Terraform Architecture
+
+```text
+                Terraform Configuration
+                     (.tf files)
+                           │
+                           ▼
+                  Terraform CLI
+          (init / plan / apply / destroy)
+                           │
+                           ▼
+                    AWS Provider Plugin
+                           │
+                           ▼
+                    AWS API Calls
+                           │
+                           ▼
+          AWS Resources (VPC, EKS, S3, IAM...)
+```
+
+---
+
+# Terraform Workflow
+
+Terraform follows a predictable workflow.
+
+## Step 1 — Write Configuration
+
+Create Terraform configuration files.
+
+Example:
+
+- main.tf
+- variables.tf
+- outputs.tf
+
+---
+
+## Step 2 — Initialize
+
+```bash
+terraform init
+```
+
+Purpose:
+
+- Downloads required providers
+- Initializes backend
+- Creates `.terraform/`
+
+Run only once per project (or after backend/provider changes).
+
+---
+
+## Step 3 — Validate
+
+```bash
+terraform validate
+```
+
+Purpose:
+
+- Checks syntax
+- Detects configuration errors
+
+---
+
+## Step 4 — Plan
+
+```bash
+terraform plan
+```
+
+Purpose:
+
+Shows what Terraform **will do** without making changes.
+
+Example:
+
+```
++ Create VPC
+
++ Create Subnets
+
++ Create Route Table
+
++ Create Internet Gateway
+```
+
+Think of this as a dry run.
+
+---
+
+## Step 5 — Apply
+
+```bash
+terraform apply
+```
+
+Purpose:
+
+Creates or updates infrastructure.
+
+Terraform compares:
+
+Current State
+
+↓
+
+Desired State
+
+↓
+
+Makes only necessary changes
+
+---
+
+## Step 6 — Destroy
+
+```bash
+terraform destroy
+```
+
+Purpose:
+
+Deletes all resources managed by Terraform.
+
+Useful for:
+
+- Lab cleanup
+- Cost optimization
+- Test environments
+
+---
+
+# Core Terraform Components
+
+## Provider
+
+A provider allows Terraform to communicate with external platforms.
+
+Example:
+
+```hcl
+provider "aws" {
+  region = "us-east-1"
+}
+```
+
+The AWS Provider translates Terraform configuration into AWS API calls.
+
+---
+
+## Resources
+
+Resources represent actual infrastructure.
+
+Examples:
+
+- VPC
+- EC2
+- S3 Bucket
+- IAM Role
+- EKS Cluster
+
+Example:
+
+```hcl
+resource "aws_s3_bucket" "state" {
+  bucket = "my-tf-state"
+}
+```
+
+---
+
+## Variables
+
+Variables make configurations reusable.
+
+Example:
+
+```hcl
+variable "region" {
+  default = "us-east-1"
+}
+```
+
+Benefits:
+
+- Reusability
+- Cleaner code
+- Environment-specific configuration
+
+---
+
+## Outputs
+
+Outputs expose useful information after deployment.
+
+Example:
+
+```hcl
+output "cluster_name" {
+  value = aws_eks_cluster.main.name
+}
+```
+
+Useful for:
+
+- CI/CD pipelines
+- Scripts
+- Other Terraform modules
+
+---
+
+## Modules
+
+Modules are reusable collections of Terraform resources.
+
+Instead of writing everything in one file:
+
+```
+VPC
+
+Subnets
+
+Routes
+
+Internet Gateway
+
+NAT Gateway
+```
+
+All infrastructure can be grouped into:
+
+```
+modules/
+
+vpc/
+
+eks/
+
+network/
+```
+
+Benefits:
+
+- Reusable
+- Easy maintenance
+- Cleaner structure
+
+---
+
+# Common Terraform Commands
+
+Initialize
+
+```bash
+terraform init
+```
+
+Validate
+
+```bash
+terraform validate
+```
+
+Format code
+
+```bash
+terraform fmt
+```
+
+Preview changes
+
+```bash
+terraform plan
+```
+
+Apply changes
+
+```bash
+terraform apply
+```
+
+Destroy infrastructure
+
+```bash
+terraform destroy
+```
+
+Show current state
+
+```bash
+terraform show
+```
+
+List managed resources
+
+```bash
+terraform state list
+```
+
+---
+
+# Project Workflow
+
+For this project the workflow is:
+
+```
+Write Terraform Code
+
+↓
+
+terraform fmt
+
+↓
+
+terraform validate
+
+↓
+
+terraform init
+
+↓
+
+terraform plan
+
+↓
+
+terraform apply
+
+↓
+
+Verify Resources in AWS
+
+↓
+
+Commit Code
+
+↓
+
+Push to GitHub
+```
+
+---
+
+# Best Practices
+
+✅ Use modules for reusable infrastructure
+
+✅ Keep secrets out of Git
+
+✅ Store Terraform State remotely
+
+✅ Review `terraform plan` before applying
+
+✅ Use variables instead of hardcoding values
+
+✅ Commit only Terraform code—not state files
+
+---
+
+# Files Used in This Project
+
+```
+terraform/
+
+main.tf
+
+variables.tf
+
+outputs.tf
+
+terraform.tfvars
+
+providers.tf
+
+backend.tf
+
+modules/
+```
+
+---
+
+# Common Mistakes
+
+❌ Running `terraform apply` without reviewing the plan
+
+❌ Committing `terraform.tfstate` to Git
+
+❌ Hardcoding AWS credentials
+
+❌ Using the root AWS account
+
+❌ Editing infrastructure manually in the AWS Console after Terraform manages it
+
+---
+
+# Key Learnings
+
+During this sprint I learned:
+
+- Infrastructure as Code concepts
+- Terraform workflow
+- Terraform providers
+- Resources
+- Variables
+- Outputs
+- Modules
+- AWS provider configuration
+- Infrastructure provisioning lifecycle
+
+---
+
+# Interview Questions
+
+### What is Terraform?
+
+### Why is Terraform preferred over manual AWS provisioning?
+
+### What is Infrastructure as Code?
+
+### Difference between `terraform init`, `plan`, and `apply`?
+
+### What is a Provider?
+
+### What is a Resource?
+
+### What is a Module?
+
+### Why use Variables?
+
+### Why use Outputs?
+
+### Can Terraform manage existing infrastructure?
+
+---
+
+# Summary
+
+Terraform enables infrastructure to be managed as code rather than manually through cloud consoles. By defining infrastructure declaratively, teams can provision consistent environments, collaborate using version control, automate deployments, and safely manage cloud resources. In this project, Terraform serves as the foundation for provisioning AWS infrastructure that will later host the Kubernetes cluster and supporting services.
+````
