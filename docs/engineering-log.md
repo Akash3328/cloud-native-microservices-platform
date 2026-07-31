@@ -55,5 +55,38 @@ No major issues encountered during environment setup.
 ---
 
 ## Next Sprint
+# Sprint 2 – Containerization
 
-Sprint 2 – Containerization of Individual Microservices
+## Objective
+
+Containerize selected microservices and understand Docker-based local development.
+
+---
+
+## Tasks Completed
+
+- Studied Docker lifecycle
+- Containerized Go service
+- Containerized Java service
+- Containerized Python service
+- Learned multi-stage Docker builds
+- Learned Docker layer caching
+- Built Docker images
+- Learned image registry workflow
+- Understood Docker Compose
+- Successfully executed Docker Compose locally
+
+---
+
+## Key Learnings
+
+- Multi-stage builds reduce image size.
+- Layer caching speeds up builds.
+- Docker Compose simplifies multi-container applications.
+- Containers provide consistent runtime environments.
+
+---
+
+## Status
+
+Sprint 2 completed successfully.
